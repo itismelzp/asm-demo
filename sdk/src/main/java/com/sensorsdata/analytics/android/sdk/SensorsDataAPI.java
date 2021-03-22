@@ -43,10 +43,11 @@ public class SensorsDataAPI {
 
     @Keep
     public void track(@NonNull final String eventName, @NonNull JSONObject properties) {
-        JSONObject jsonObject = new JSONObject();
         try {
+            JSONObject jsonObject = new JSONObject();
             jsonObject.put("event", eventName);
             jsonObject.put("device_id", mDeviceId);
+
             JSONObject sendProperties = new JSONObject(mDeviceInfo);
 
             if (properties != null) {

@@ -61,7 +61,7 @@ public class SensorsDataPrivate {
         deviceInfo.put("$lib_version", SensorsDataAPI.SDK_VERSION);
         deviceInfo.put("$os", "Android");
         deviceInfo.put("$os_version", Build.VERSION.RELEASE == null ? "UNKNOWN" : Build.VERSION.RELEASE);
-        deviceInfo.put("&manufacture", Build.MANUFACTURER == null ? "UNKNOWN" : Build.MANUFACTURER);
+        deviceInfo.put("&manufacturer", Build.MANUFACTURER == null ? "UNKNOWN" : Build.MANUFACTURER);
         if (TextUtils.isEmpty(Build.MODEL)) {
             deviceInfo.put("$model", "UNKNOWN");
         } else {
@@ -233,7 +233,10 @@ public class SensorsDataPrivate {
 
     public static Activity getActivityFromContext(Context context) {
         Activity activity = null;
-        if (context != null) {
+        if (context== null) {
+            return activity;
+        }
+        try {
             if (context instanceof Activity) {
                 activity = (Activity) context;
             } else if (context instanceof ContextWrapper) {
@@ -244,6 +247,8 @@ public class SensorsDataPrivate {
                     activity = (Activity) context;
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return activity;
     }

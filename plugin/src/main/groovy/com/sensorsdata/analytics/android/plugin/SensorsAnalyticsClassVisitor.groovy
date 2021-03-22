@@ -12,7 +12,7 @@ class SensorsAnalyticsClassVisitor extends ClassVisitor implements Opcodes {
     private ClassVisitor classVisitor
 
     SensorsAnalyticsClassVisitor(final ClassVisitor classVisitor) {
-        super(Opcodes.ASM5, classVisitor)
+        super(Opcodes.ASM6, classVisitor)
         this.classVisitor = classVisitor
     }
 
@@ -34,7 +34,7 @@ class SensorsAnalyticsClassVisitor extends ClassVisitor implements Opcodes {
 
         String nameDesc = name + desc
 
-        methodVisitor = new SensorsAnalyticsDefaultMethod(methodVisitor, access, name, desc) {
+        methodVisitor = new SensorsAnalyticsDefaultMethodVisitor(methodVisitor, access, name, desc) {
             @Override
             protected void onMethodExit(int opcode) {
                 super.onMethodExit(opcode)

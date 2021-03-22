@@ -9,6 +9,7 @@ import org.objectweb.asm.ClassWriter
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
+import java.util.regex.Matcher
 import java.util.zip.ZipEntry
 
 class SensorsAnalyticsClassModifier {
@@ -38,29 +39,33 @@ class SensorsAnalyticsClassModifier {
             try {
                 inputStream = file.getInputStream(jarEntry)
             } catch (Exception e) {
+                println(e.getMessage())
+                e.printStackTrace()
                 return null
             }
 
             String entryName = jarEntry.getName()
-            String className
+            if (entryName.endsWith(".DSA") || entryName.endsWith(".SF")) {
+                // ignore
+            } else {
+                String className
+                ZipEntry zipEntry = new ZipEntry(entryName)
+                jarOutputStream.putNextEntry(zipEntry)
 
-            ZipEntry zipEntry = new ZipEntry(entryName)
-
-            jarOutputStream.putNextEntry(zipEntry)
-
-            byte[] modifiedClassBytes = null
-            byte[] sourceClassBytes = IOUtils.toByteArray(inputStream)
-            if (entryName.endsWith('.class')) {
-                className = entryName.replace("/", ".").replace('.class', '')
-                if (isShouldModify(className)) {
-                    modifiedClassBytes = modifyClass(sourceClassBytes)
+                byte[] modifiedClassBytes = null
+                byte[] sourceClassBytes = IOUtils.toByteArray(inputStream)
+                if (entryName.endsWith('.class')) {
+                    className = entryName.replace(Matcher.quoteReplacement(File.separator), ".").replace(".class", "")
+                    if (isShouldModify(className)) {
+                        modifiedClassBytes = modifyClass(sourceClassBytes)
+                    }
                 }
+                if (modifiedClassBytes == null) {
+                    modifiedClassBytes = sourceClassBytes
+                }
+                jarOutputStream.write(modifiedClassBytes)
+                jarOutputStream.closeEntry()
             }
-            if (modifiedClassBytes == null) {
-                modifiedClassBytes = sourceClassBytes
-            }
-            jarOutputStream.write(modifiedClassBytes)
-            jarOutputStream.closeEntry()
         }
         jarOutputStream.close()
         file.close()
@@ -72,7 +77,7 @@ class SensorsAnalyticsClassModifier {
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS)
         ClassVisitor classVisitor = new SensorsAnalyticsClassVisitor(classWriter)
         ClassReader classReader = new ClassReader(srcClass)
-        classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
+        classReader.accept(classVisitor, ClassReader.SKIP_FRAMES)
         return classWriter.toByteArray()
     }
 
@@ -87,6 +92,7 @@ class SensorsAnalyticsClassModifier {
 
         if (className.contains('R$')
                 || className.contains('R2$')
+                || className.contains('R.class')
                 || className.contains('R2.class')
                 || className.contains('BuildConfig.class')) {
             return false
@@ -108,7 +114,7 @@ class SensorsAnalyticsClassModifier {
                 modified.createNewFile()
                 new FileOutputStream(modified).write(modifiedClassBytes)
             }
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace()
             modified = classFile
         }

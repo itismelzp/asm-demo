@@ -3,11 +3,14 @@ package com.sensorsdata.analytics.android.sdk;
 import android.app.Activity;
 import android.view.View;
 
+import androidx.annotation.Keep;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SensorsDataAutoTrackHelper {
 
+    @Keep
     public static void trackViewOnClick(View view) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -18,6 +21,7 @@ public class SensorsDataAutoTrackHelper {
             if (activity != null) {
                 jsonObject.put("$activity", activity.getClass().getCanonicalName());
             }
+
             SensorsDataAPI.getInstance().track("$AppClick", jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
