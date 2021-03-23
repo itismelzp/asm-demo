@@ -41,8 +41,14 @@ class SensorsAnalyticsClassVisitor extends ClassVisitor implements Opcodes {
 
                 if (mInterfaces != null && mInterfaces.length > 0) {
                     if ((mInterfaces.contains('android/view/View$OnClickListener')
-                            && nameDesc == 'onClick(Landroid/view/View;)V') ||
-                            desc == '(Landroid/view/View;)V') {
+                            && nameDesc == 'onClick(Landroid/view/View;)V')
+//                            || desc == '(Landroid/view/View;)V'
+                    ) {
+
+                        println("visitMethod onMethodExit name: ${name}")
+                        println("visitMethod onMethodExit nameDesc: ${nameDesc}")
+                        println("visitMethod onMethodExit desc: ${desc}")
+
                         methodVisitor.visitVarInsn(ALOAD, 1)
                         methodVisitor.visitMethodInsn(INVOKESTATIC, SDK_API_CLASS,
                                 "trackViewOnClick", "(Landroid/view/View;)V", false)

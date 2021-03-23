@@ -24,13 +24,16 @@ class SensorsAnalyticsClassModifier {
     static File modifyJar(File jarFile, File tempDir, boolean nameHex) {
         // 读取原jar
         def file = new JarFile(jarFile, false)
+        // /Users/walker/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.1.0/b3152fc64428c9354344bd89848ecddc09b6f07e/core-common-2.1.0.jar
+//        println("modifyJar JarFile: ${file.name}")
         // 设置输出到的jar
         def hexName = ""
         if (nameHex) {
             hexName = DigestUtils.md5Hex(jarFile.absolutePath).substring(0, 8)
         }
         def outputJar = new File(tempDir, hexName + jarFile.name)
-
+        // bbd120aecore-common-2.1.0.jar
+//        println("modifyJar outputJar: " + outputJar.name)
         JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(outputJar))
         Enumeration enumeration = file.entries()
         while (enumeration.hasMoreElements()) {
@@ -55,7 +58,11 @@ class SensorsAnalyticsClassModifier {
                 byte[] modifiedClassBytes = null
                 byte[] sourceClassBytes = IOUtils.toByteArray(inputStream)
                 if (entryName.endsWith('.class')) {
+                    // androidx/constraintlayout/solver/ArrayRow.class
+//                    println("modifyJar entryName: ${entryName}")
                     className = entryName.replace(Matcher.quoteReplacement(File.separator), ".").replace(".class", "")
+                    // androidx.constraintlayout.solver.ArrayRow
+//                    println("modifyJar className: ${className}")
                     if (isShouldModify(className)) {
                         modifiedClassBytes = modifyClass(sourceClassBytes)
                     }
@@ -103,11 +110,26 @@ class SensorsAnalyticsClassModifier {
     static File modifyClassFile(File dir, File classFile, File tempDir) {
         File modified = null
         try {
-            String className = path2ClassName(classFile.absolutePath.replace(dir.absolutePath + File.separator, ""))
+            String tmpDir = tempDir.absolutePath
+            // /Users/walker/android_demo/gradle_demo/AutoTrackTransformProject/app/build/tmp/transformClassesWithSensorsAnalyticsForDebug
+            println("modifyClassFile tmpDir: " + tmpDir)
+            String absolutePath = classFile.absolutePath
+            // /Users/walker/android_demo/gradle_demo/AutoTrackTransformProject/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/example/autotracktransformproject/MainActivity.class
+            println("modifyClassFile absolutePath: " + absolutePath)
+            String dirPath = dir.absolutePath + File.separator
+            // /Users/walker/android_demo/gradle_demo/AutoTrackTransformProject/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/
+            println("modifyClassFile dirPath: " + dirPath)
+            String pathName = absolutePath.replace(dirPath, "")
+            // com/example/autotracktransformproject/MainActivity.class
+            println("modifyClassFile pathName: " + pathName)
+            String className = path2ClassName(pathName)
+            // com.example.autotracktransformproject.MainActivity
+            println("modifyClassFile className: " + className)
             byte[] sourceClassBytes = IOUtils.toByteArray(new FileInputStream(classFile))
             byte[] modifiedClassBytes = modifyClass(sourceClassBytes)
             if (modifiedClassBytes) {
                 modified = new File(tempDir, className.replace('.', '') + '.class')
+                println("modifyClassFile modified className: " + className)
                 if (modified.exists()) {
                     modified.delete()
                 }
@@ -121,6 +143,7 @@ class SensorsAnalyticsClassModifier {
         return modified
     }
 
+    // com/walker/demo/HelloWorld.class -> com.walker.demo.HelloWorld
     static String path2ClassName(String pathName) {
         pathName.replace(File.separator, ".").replace(".class", "")
     }

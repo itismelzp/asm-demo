@@ -233,8 +233,8 @@ public class SensorsDataPrivate {
 
     public static Activity getActivityFromContext(Context context) {
         Activity activity = null;
-        if (context== null) {
-            return activity;
+        if (context == null) {
+            return null;
         }
         try {
             if (context instanceof Activity) {

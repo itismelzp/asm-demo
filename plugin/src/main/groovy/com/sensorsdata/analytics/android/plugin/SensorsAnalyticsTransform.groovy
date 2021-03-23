@@ -58,10 +58,11 @@ class SensorsAnalyticsTransform extends Transform {
 //
 //    }
 
+    /** 即使该方法什么都是不做也需所所有的输入文件拷贝到目标目录下，否则下一个Task就没有TransformInput了 **/
     void _transform(Context context, Collection<TransformInput> inputs, TransformOutputProvider outputProvider, boolean isIncremental)
             throws IOException, TransformException, InterruptedException {
 
-//        printCopyRight()
+        printCopyRight()
 
         if (!incremental) {
             outputProvider.deleteAll()
