@@ -23,19 +23,19 @@ uploadArchives {
             pom.version = '1.0.0'
         }
         // 2）远程maven库
-        mavenDeployer {
-            // 仓库路径（只能是hosted仓库）
-            repository(url: 'http://localhost:8081/repository/autotracktransform/') {
-                // nexus的账户密码
-                authentication(userName: 'admin', password: 'admin123')
-            }
-            // GAV
-            pom.project {
-                groupId 'com.sensorsdata'
-                artifactId 'autotrack.android'
-                version '1.0.0'
-                description 'ASM框架'
-            }
-        }
+//        mavenDeployer {
+//            // 仓库路径（只能是hosted仓库）
+//            repository(url: 'http://localhost:8081/repository/autotracktransform/') {
+//                // nexus的账户密码
+//                authentication(userName: 'admin', password: 'admin123')
+//            }
+//            // GAV
+//            pom.project {
+//                groupId 'com.sensorsdata'
+//                artifactId 'autotrack.android'
+//                version '1.0.0'
+//                description 'ASM框架'
+//            }
+//        }
     }
 }
