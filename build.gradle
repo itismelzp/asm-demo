@@ -8,6 +8,7 @@ buildscript {
         maven {
             url uri('repo')
         }
+        maven { url 'http://localhost:8081/repository/autotracktransform/' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.1"
