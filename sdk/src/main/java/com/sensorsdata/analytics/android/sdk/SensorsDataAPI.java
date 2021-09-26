@@ -23,9 +23,11 @@ public class SensorsDataAPI {
 
     @Keep
     public static SensorsDataAPI init(Application application) {
-        synchronized (mLock) {
-            if (INSTANCE == null) {
-                INSTANCE = new SensorsDataAPI(application);
+        if (INSTANCE == null) {
+            synchronized (mLock) {
+                if (INSTANCE == null) {
+                    INSTANCE = new SensorsDataAPI(application);
+                }
             }
         }
         return INSTANCE;
