@@ -1,4 +1,4 @@
-include ':sdk'
-include ':plugin'
+include ':track_sdk'
+include ':track_plugin'
 include ':app'
 rootProject.name = "AutoTrackTransformProject"
