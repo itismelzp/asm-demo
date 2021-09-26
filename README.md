@@ -41,7 +41,7 @@ uploadArchives {
 }
 ```
 
-使用我们的maven库：
+3) 使用我们的maven库
 ```groovy
 // ...
 allprojects {

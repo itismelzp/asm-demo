@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.plugin
+package com.walker.analytics.plugin
 
 import com.android.build.api.transform.Context
 import com.android.build.api.transform.DirectoryInput
@@ -87,7 +87,7 @@ class SensorsAnalyticsTransform extends Transform {
 //                            println("modified: $modified")
                             if (modified != null) {
                                 /**
-                                 * key为包名+类名，如：/cn/sensorsdata/autotrack/android/app/MainActivity.class*
+                                 * key为包名+类名，如：/com/walker/autotrack/android/app/MainActivity.class*
                                  */
                                 String key = classFile.absolutePath.replace(dir.absolutePath, "")
                                 modifyMap.put(key, modified)

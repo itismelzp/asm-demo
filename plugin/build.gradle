@@ -18,7 +18,7 @@ uploadArchives {
             // 本地仓库路径，以放到项目根目录下的repo的文件夹为例
             repository(url: uri('../repo'))
             // GAV
-            pom.groupId = 'com.sensorsdata'
+            pom.groupId = 'com.walker'
             pom.artifactId = 'autotrack.android'
             pom.version = '1.0.0'
         }
@@ -31,7 +31,7 @@ uploadArchives {
 //            }
 //            // GAV
 //            pom.project {
-//                groupId 'com.sensorsdata'
+//                groupId 'com.walker'
 //                artifactId 'autotrack.android'
 //                version '1.0.0'
 //                description 'ASM框架'

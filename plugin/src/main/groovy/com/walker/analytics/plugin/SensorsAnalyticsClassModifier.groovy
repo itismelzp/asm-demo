@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.plugin
+package com.walker.analytics.plugin
 
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.IOUtils
@@ -18,7 +18,7 @@ class SensorsAnalyticsClassModifier {
     static {
         exclude = new HashSet<>()
         exclude.add('android.support')
-        exclude.add('com.sensorsdata.analytics.android.sdk')
+        exclude.add('com.walker.analytics.sdk')
     }
 
     static File modifyJar(File jarFile, File tempDir, boolean nameHex) {

@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.plugin
+package com.walker.analytics.plugin
 
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
@@ -7,7 +7,7 @@ import org.objectweb.asm.Opcodes
 
 class SensorsAnalyticsClassVisitor extends ClassVisitor implements Opcodes {
 
-    private final static String SDK_API_CLASS = "com/sensorsdata/analytics/android/sdk/SensorsDataAutoTrackHelper"
+    private final static String SDK_API_CLASS = "com/walker/analytics/sdk/SensorsDataAutoTrackHelper"
     private String[] mInterfaces
     private ClassVisitor classVisitor
 

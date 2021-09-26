@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.sdk;
+package com.walker.analytics.sdk;
 
 import android.app.Activity;
 import android.content.Context;

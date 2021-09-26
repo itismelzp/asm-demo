@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.plugin
+package com.walker.analytics.plugin
 
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.Attribute

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.sensorsdata.android'
+apply plugin: 'com.walker.android'
 
 android {
     compileSdkVersion 30
